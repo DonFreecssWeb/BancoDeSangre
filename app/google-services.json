@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "968904890207",
+    "firebase_url": "https://bancodesangre-24d25.firebaseio.com",
+    "project_id": "bancodesangre-24d25",
+    "storage_bucket": "bancodesangre-24d25.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:968904890207:android:6bbb9c91c48259590888ea",
+        "android_client_info": {
+          "package_name": "com.example.proyecto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "968904890207-9duigihg61mkln0jfi4ud5gua3lktgev.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAl1rgzvsyMBmn5DGOvvkArAKemmKdfry4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "968904890207-9duigihg61mkln0jfi4ud5gua3lktgev.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
