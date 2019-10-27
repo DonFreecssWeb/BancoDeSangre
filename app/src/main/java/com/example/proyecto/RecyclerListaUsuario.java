@@ -39,28 +39,6 @@ public class RecyclerListaUsuario extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
-        //getData
-      /*  db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                String nombre,apellido,correo,telefono;
-
-                if (task.isSuccessful()){
-
-                    for (QueryDocumentSnapshot document : task.getResult()){
-                        nombre = document.getString("nombre");
-                        apellido = document.getString("apellido");
-                        correo = document.getString("correo");
-                        telefono = document.getString("telefono");
-
-
-
-                        usuarios.add(new Usuario(nombre,apellido,correo,telefono));
-
-                    }
-                }
-            }
-        });*/
 
 
         db.collection("users")
