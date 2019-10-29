@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RecyclerListaUsuario"></activity>
+        <activity android:name=".PostDetalle"></activity>
+        <activity android:name=".RecyclerListaUsuario" />
         <activity android:name=".UsuarioActivity" />
         <activity android:name=".BuscarActivity" />
         <activity android:name=".RegistrarActivity" />

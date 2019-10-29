@@ -3,6 +3,7 @@ package com.example.proyecto;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -61,7 +62,8 @@ private EditText correo,clave;
 
                                     Intent intent = new Intent(MainActivity.this, RecyclerListaUsuario.class);
                                     //intent.putExtras(bundle);
-                                    startActivity(intent);
+
+                                    startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(MainActivity.this).toBundle());
                                     Toast.makeText(MainActivity.this, "correo y nombre validos"+ape, Toast.LENGTH_SHORT).show();
                                 }
                                 else {

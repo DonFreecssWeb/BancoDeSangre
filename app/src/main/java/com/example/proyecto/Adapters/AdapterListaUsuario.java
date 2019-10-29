@@ -3,6 +3,8 @@ package com.example.proyecto.Adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,15 +16,18 @@ import com.example.proyecto.Usuario;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
-public class AdapterListaUsuario extends RecyclerView.Adapter<AdapterListaUsuario.viewHolderDatos> {
+public class AdapterListaUsuario extends RecyclerView.Adapter<AdapterListaUsuario.viewHolderDatos> implements Filterable   {
     ArrayList<Usuario> usuarios = new ArrayList<>();
-
+    ArrayList<Usuario> usuariosFull;
     public AdapterListaUsuario(ArrayList<Usuario> usuarios) {
-        this.usuarios = usuarios;
-    }
 
+        this.usuarios = usuarios;
+        this.usuariosFull = new ArrayList<>(usuarios);
+    }
+    public AdapterListaUsuario(){}
 
 
     @NonNull
@@ -41,6 +46,49 @@ public class AdapterListaUsuario extends RecyclerView.Adapter<AdapterListaUsuari
     public int getItemCount() {
         return usuarios.size();
     }
+
+ /*   public void updateList(ArrayList<Usuario> newList){
+        usuarios = new ArrayList<>();
+        usuarios.addAll(newList);
+        notifyDataSetChanged();
+    }
+*/
+
+    @Override
+    public Filter getFilter() {
+        return seachFilter;
+    }
+
+    private Filter seachFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            ArrayList<Usuario> filteredList = new ArrayList<>();
+            if (charSequence == null || charSequence.length() == 0){
+                filteredList.addAll(usuariosFull);
+            }else {
+                String filterPattern = charSequence.toString().toLowerCase().trim();
+
+                for (Usuario item : usuariosFull) {
+                    if (item.getCorreo().toLowerCase().contains(filterPattern)){
+                        filteredList.add(item);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return  results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            usuarios.clear();
+            usuarios.addAll((Collection<? extends Usuario>) filterResults.values);
+            notifyDataSetChanged();
+
+        }
+    };
 
 
     public static class viewHolderDatos extends RecyclerView.ViewHolder {
@@ -61,4 +109,6 @@ public class AdapterListaUsuario extends RecyclerView.Adapter<AdapterListaUsuari
             telefono.setText(usuario.getTelefono());
         }
     }
+
+
 }

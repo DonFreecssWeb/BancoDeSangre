@@ -7,8 +7,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.proyecto.Adapters.AdapterListaUsuario;
@@ -22,6 +26,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class RecyclerListaUsuario extends AppCompatActivity {
 
@@ -29,6 +34,10 @@ public class RecyclerListaUsuario extends AppCompatActivity {
 
     RecyclerView recyclerView;
     RecyclerView.Adapter madapter;
+    AdapterListaUsuario adaptador = new AdapterListaUsuario();
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +46,6 @@ public class RecyclerListaUsuario extends AppCompatActivity {
         recyclerView = findViewById(R.id.rv_listaUsuario);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-
-
 
         db.collection("users")
                 .get()
@@ -55,7 +61,7 @@ public class RecyclerListaUsuario extends AppCompatActivity {
                                 String ape = document.getString("apellido");
                                 String tel = document.getString("telefono");
 
-                                usuarios.add(new Usuario(nom, cor, ape, tel));
+                                usuarios.add(new Usuario(nom, ape, cor, tel));
 
 
                                 //  Log.d(TAG, document.getId() + " => " + document.getData());
@@ -74,10 +80,35 @@ public class RecyclerListaUsuario extends AppCompatActivity {
     }
     public  void updateData(){
         madapter = new AdapterListaUsuario(usuarios);
-
-
         recyclerView.setAdapter(madapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
+
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        updateData();
+        getMenuInflater().inflate(R.menu.topmenu,menu);
+        MenuItem seachItem = menu.findItem(R.id.search);
+        SearchView searchView = (SearchView) seachItem.getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+
+            public boolean onQueryTextChange(String s) {
+
+                adaptador.getFilter().filter(s);
+                return false;
+            }
+        });
+        return true;
+    }
+
+
+
+
 
 }
