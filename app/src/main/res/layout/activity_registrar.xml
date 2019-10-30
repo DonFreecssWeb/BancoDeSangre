@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegistrarActivity">
+    tools:context=".RegistrarUsuario">
 
     <TextView
         android:id="@+id/textView2"
@@ -39,7 +39,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_nombre"
+            android:id="@+id/crear_cuenta_nombre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nombre(s)"
@@ -60,7 +60,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_apellido"
+            android:id="@+id/crear_cuenta_apellido"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Apellidos"
@@ -81,7 +81,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_correo"
+            android:id="@+id/crear_cuenta_corre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Correo"
@@ -102,10 +102,10 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout5">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_telefono"
+            android:id="@+id/crear_cuenta_clave"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Telefono"
+            android:hint="Clave"
             android:inputType="number"
             android:phoneNumber="false" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -133,7 +133,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:onClick="Buscar"
+        android:onClick="crear"
         android:text="@string/crear_cuenta"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

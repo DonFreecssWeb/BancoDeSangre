@@ -34,7 +34,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_correo"
+            android:id="@+id/crear_cuenta_corre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Ingrese Cuenta" />
@@ -54,7 +54,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_clave"
+            android:id="@+id/login_et_clave"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Ingrese Contraseña"

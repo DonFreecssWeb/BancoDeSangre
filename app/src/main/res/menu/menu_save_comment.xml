@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/search"
-        android:icon="@drawable/ic_search"
+        android:id="@+id/menu_save_comment"
+        android:icon="@drawable/ic_insert_comment"
         android:title="Search"
         app:actionViewClass="android.widget.SearchView"
         app:showAsAction="always"

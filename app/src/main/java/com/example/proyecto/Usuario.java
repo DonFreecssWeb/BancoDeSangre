@@ -4,18 +4,18 @@ import java.io.Serializable;
 
 public class Usuario implements Serializable {
     private String nombre,apellido,correo;
-    private String telefono;
+    private String clave;
 
 
     public Usuario(){
 
     };
 
-    public Usuario(String nombre, String apellido, String correo, String telefono) {
+    public Usuario(String nombre, String apellido, String correo, String clave) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.correo = correo;
-        this.telefono = telefono;
+        this.clave = clave;
     }
 
     public String getNombre() {
@@ -42,11 +42,11 @@ public class Usuario implements Serializable {
         this.correo = correo;
     }
 
-    public String getTelefono() {
-        return telefono;
+    public String getClave() {
+        return clave;
     }
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
+    public void setClave(String clave) {
+        this.clave = clave;
     }
 }

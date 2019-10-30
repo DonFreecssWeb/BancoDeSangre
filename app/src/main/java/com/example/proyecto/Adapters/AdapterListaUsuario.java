@@ -13,11 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.proyecto.R;
 import com.example.proyecto.Usuario;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 public class AdapterListaUsuario extends RecyclerView.Adapter<AdapterListaUsuario.viewHolderDatos> implements Filterable   {
     ArrayList<Usuario> usuarios = new ArrayList<>();
@@ -46,13 +43,6 @@ public class AdapterListaUsuario extends RecyclerView.Adapter<AdapterListaUsuari
     public int getItemCount() {
         return usuarios.size();
     }
-
- /*   public void updateList(ArrayList<Usuario> newList){
-        usuarios = new ArrayList<>();
-        usuarios.addAll(newList);
-        notifyDataSetChanged();
-    }
-*/
 
     @Override
     public Filter getFilter() {
@@ -106,7 +96,7 @@ public class AdapterListaUsuario extends RecyclerView.Adapter<AdapterListaUsuari
             nombre.setText(usuario.getNombre());
             apellido.setText(usuario.getApellido());
             correo.setText(usuario.getCorreo());
-            telefono.setText(usuario.getTelefono());
+            telefono.setText(usuario.getClave());
         }
     }
 
