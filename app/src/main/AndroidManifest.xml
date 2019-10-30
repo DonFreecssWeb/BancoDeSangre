@@ -9,14 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+<!--        <activity android:name=".RadioActivity"></activity>-->
         <activity android:name=".NewPost" />
         <activity android:name=".PostDetalle" />
-        <activity android:name=".RecyclerListaUsuario" />
+        <activity android:name=".RecyclerListaUsuario"/>
         <activity android:name=".UsuarioActivity" />
         <activity android:name=".BuscarActivity" />
         <activity android:name=".RegistrarUsuario" />
-        <activity android:name=".Login">
+        <activity android:name=".RadioActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
