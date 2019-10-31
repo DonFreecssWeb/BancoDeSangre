@@ -30,7 +30,7 @@ public class Login extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         clave = findViewById(R.id.login_et_clave);
-        correo = findViewById(R.id.crear_cuenta_corre);
+        correo = findViewById(R.id.crear_cuenta_correo);
 
 
 
@@ -52,7 +52,7 @@ public class Login extends AppCompatActivity {
 
                     if (task.isSuccessful()) {
                         Log.d("TAG", "signInWithEmail:success");
-                        FirebaseUser user = mAuth.getCurrentUser();
+
                         Intent intent = new Intent(Login.this, RecyclerListaUsuario.class);
                         startActivity(intent);
                     } else {

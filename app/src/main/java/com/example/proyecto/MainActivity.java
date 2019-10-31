@@ -27,7 +27,7 @@ private FirebaseAuth mAuth;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        correo = findViewById(R.id.crear_cuenta_corre);
+        correo = findViewById(R.id.crear_cuenta_correo);
         clave = findViewById(R.id.login_et_clave);
 
         mAuth = FirebaseAuth.getInstance();

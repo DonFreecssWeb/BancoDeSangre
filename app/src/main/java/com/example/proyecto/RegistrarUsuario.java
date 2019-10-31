@@ -16,18 +16,25 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
+
 import com.google.firebase.auth.FirebaseAuth;
+
+import com.google.firebase.firestore.auth.User;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class RegistrarUsuario extends AppCompatActivity {
-EditText nombre,apellido,correo,clave;
+EditText nombre;
+EditText ape;
+EditText correo;
+EditText clave;
+
+
 
 
 
@@ -36,24 +43,30 @@ private FirebaseAuth mAuth;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrar);
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
 nombre = findViewById(R.id.crear_cuenta_nombre);
-apellido = findViewById(R.id.crear_cuenta_apellido);
-correo = findViewById(R.id.crear_cuenta_corre);
+ape = findViewById(R.id.crear_cuenta_apellido);
+correo = findViewById(R.id.crear_cuenta_correo);
 clave = findViewById(R.id.crear_cuenta_clave);
 
-        mAuth = FirebaseAuth.getInstance();
+        //  mAuth = FirebaseAuth.getInstance();
 
 
     }
-    String usuarioActual;
 
-    public void crear (View view){
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAuth = FirebaseAuth.getInstance();
+
+    }
+
+    public void crear (View view) {
         String email = correo.getText().toString();
         String password = clave.getText().toString();
         String name = nombre.getText().toString();
-        String lastname = apellido.getText().toString();
-        String id = "";
+        String lastname = ape.getText().toString();
+
 
         if (email.isEmpty() || password.isEmpty() || name.isEmpty() || lastname.isEmpty()) {
             Toast.makeText(this, "Debe llenar todos los campos", Toast.LENGTH_SHORT).show();
@@ -62,10 +75,11 @@ clave = findViewById(R.id.crear_cuenta_clave);
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        Toast.makeText(RegistrarUsuario.this, "Authentication OK.",
+                        Toast.makeText(RegistrarUsuario.this, "Cuenta creada exitosamente",
                                 Toast.LENGTH_SHORT).show();
-
-
+                        crearDataFirestore();
+                        Intent intent = new Intent(RegistrarUsuario.this, Login.class);
+                        startActivity(intent);
 
                     } else {
                         Log.w("TAG", "createUserWithEmail:failure", task.getException());
@@ -75,12 +89,12 @@ clave = findViewById(R.id.crear_cuenta_clave);
                 }
             });
 
-            crearDataFirestore();
 
         }
 
-    }
 
+
+    }
 
     public void crearDataFirestore(){
 
@@ -89,7 +103,7 @@ clave = findViewById(R.id.crear_cuenta_clave);
 
         Map<String, Object> user = new HashMap<>();
         user.put("nombre", nombre.getText().toString());
-        user.put("apellido", apellido.getText().toString());
+        user.put("apellido", ape.getText().toString());
         user.put("correo", correo.getText().toString());
 
 
@@ -111,9 +125,6 @@ clave = findViewById(R.id.crear_cuenta_clave);
                         Log.w("TAG", "Error adding document", e);
                     }
                 });
-
-
-
 
     }
 }
