@@ -14,6 +14,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathEffect;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -23,6 +24,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -43,6 +45,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,6 +60,7 @@ public class RegistrarUsuario extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseStorage storage;
     private StorageReference storageRef;
+    private String downloadImageUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +110,7 @@ public class RegistrarUsuario extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         Toast.makeText(RegistrarUsuario.this, "Cuenta creada exitosamente",
                                 Toast.LENGTH_SHORT).show();
-                        crearDataFirestore();
+
                         addImagen();
                         Intent intent = new Intent(RegistrarUsuario.this, Login.class);
                         startActivity(intent);
@@ -120,10 +124,10 @@ public class RegistrarUsuario extends AppCompatActivity {
             });
         }
     }
-
+    //agregar imagen al STORAGE
     private void addImagen() {
 
-        StorageReference mountainsRef = storageRef.child("mountains.jpg");
+        final StorageReference mountainsRef = storageRef.child("mountains.jpg");
 
         imagen.setDrawingCacheEnabled(true);
         imagen.buildDrawingCache();
@@ -132,7 +136,7 @@ public class RegistrarUsuario extends AppCompatActivity {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] data = baos.toByteArray();
 
-        UploadTask uploadTask = mountainsRef.putBytes(data);
+        final UploadTask uploadTask = mountainsRef.putBytes(data);
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
@@ -143,6 +147,29 @@ public class RegistrarUsuario extends AppCompatActivity {
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
                 // ...
+
+                Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                    @Override
+                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+
+                        if (!task.isSuccessful()){
+
+                            throw  task.getException();
+                        }
+                        downloadImageUrl = mountainsRef.getDownloadUrl().toString();
+                        return mountainsRef.getDownloadUrl();
+
+
+                    }
+                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        if (task.isSuccessful()){
+                            crearDataFirestore();   //lleva la data al firestore
+                        }
+                    }
+                });
+
             }
         });
     }
@@ -170,10 +197,12 @@ public class RegistrarUsuario extends AppCompatActivity {
 
     //metodo que salva los datos del usuario
     public void crearDataFirestore() {
+
         Map<String, Object> user = new HashMap<>();
         user.put("nombre", nombre.getText().toString());
         user.put("apellido", ape.getText().toString());
         user.put("correo", correo.getText().toString());
+        user.put("urlImage",downloadImageUrl);
 
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
