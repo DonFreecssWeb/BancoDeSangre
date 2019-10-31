@@ -11,55 +11,42 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.SearchView;
+import android.widget.Toast;
 
-import com.example.proyecto.Adapters.AdapterFirebase;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.firestore.CollectionReference;
+import com.example.proyecto.Adapters.AdapterListaUsuario;
+import com.example.proyecto.R;
+import com.example.proyecto.Usuario;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class RecyclerListaUsuario extends AppCompatActivity {
 
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference listaUsuarioRef = db.collection("users");
-
-    private AdapterFirebase adapterFirebase;
+    ArrayList<Usuario> usuarios = new ArrayList<>();;
 
     RecyclerView recyclerView;
+    RecyclerView.Adapter madapter;
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_recycler_lista_usuario);
-        FloatingActionButton btnAddNote = findViewById(R.id.btn_add_post);
-        btnAddNote.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(RecyclerListaUsuario.this,NewPost.class));
-            }
-        });
-
-
-
-    Query query = listaUsuarioRef.orderBy("correo", Query.Direction.ASCENDING);
-
-    FirestoreRecyclerOptions<Usuario> options = new FirestoreRecyclerOptions.Builder<Usuario>()
-                .setQuery(query,Usuario.class)
-                .build();
-
-
-        adapterFirebase = new AdapterFirebase(options);
-
         recyclerView = findViewById(R.id.rv_listaUsuario);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapterFirebase);
 
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-/*
         db.collection("users")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -86,27 +73,21 @@ public class RecyclerListaUsuario extends AppCompatActivity {
                         }
                     }
 
-                });*/
+                });
 
 
 
     }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        adapterFirebase.startListening();
+    public  void updateData(){
+        madapter = new AdapterListaUsuario(usuarios);
+        recyclerView.setAdapter(madapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        adapterFirebase.stopListening();
-    }
 
-    /* public boolean onCreateOptionsMenu(Menu menu) {
+/*    public boolean onCreateOptionsMenu(Menu menu) {
         updateData();
-        getMenuInflater().inflate(R.menu.menu_save_comment,menu);
+        getMenuInflater().inflate(R.menu.topmenu,menu);
         MenuItem seachItem = menu.findItem(R.id.search);
         SearchView searchView = (SearchView) seachItem.getActionView();
 
@@ -125,6 +106,8 @@ public class RecyclerListaUsuario extends AppCompatActivity {
         });
         return true;
     }*/
+
+
 
 
 

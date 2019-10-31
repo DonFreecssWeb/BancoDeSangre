@@ -11,6 +11,7 @@
         android:theme="@style/AppTheme">
 <!--        <activity android:name=".RadioActivity"></activity>-->
         <activity android:name=".NewPost" />
+        <activity android:name=".MainActivity"></activity>
         <activity android:name=".PostDetalle" />
         <activity android:name=".RecyclerListaUsuario"/>
         <activity android:name=".UsuarioActivity" />
