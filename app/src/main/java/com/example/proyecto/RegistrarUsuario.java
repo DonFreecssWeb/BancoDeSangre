@@ -46,6 +46,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,9 +60,13 @@ public class RegistrarUsuario extends AppCompatActivity {
 
 
     private FirebaseAuth mAuth;
-    private FirebaseStorage storage;
-    private StorageReference storageRef;
+    private FirebaseStorage mFirebaseDatabase;
+    private StorageReference mStorageReference;
     private String downloadImageUrl;
+    private Uri ImageUri;
+    private String saveCurrentDate;
+    private String saveCurrentTime;
+    private String productRandomKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,8 +96,8 @@ public class RegistrarUsuario extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         mAuth = FirebaseAuth.getInstance();
-        storage = FirebaseStorage.getInstance();
-        storageRef = storage.getReference();
+        mFirebaseDatabase = FirebaseStorage.getInstance();
+        mStorageReference = mFirebaseDatabase.getInstance().getReference(); //no le habia puesto el getinstance
 
     }
     //metodo que crea la autentificacion del usuario.
@@ -126,8 +132,20 @@ public class RegistrarUsuario extends AppCompatActivity {
     }
     //agregar imagen al STORAGE
     private void addImagen() {
+        Calendar calendar = Calendar.getInstance();
 
-        final StorageReference mountainsRef = storageRef.child("mountains.jpg");
+        SimpleDateFormat currentDate = new SimpleDateFormat("dd MM, yyyy");
+        saveCurrentDate = currentDate.format(calendar.getTime());
+
+        SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss a");
+        saveCurrentTime = currentTime.format(calendar.getTime());
+
+        productRandomKey = saveCurrentDate +" "+ saveCurrentTime;
+
+
+
+        //final StorageReference mountainsRef = storageRef.child("mountains.jpg");
+
 
         imagen.setDrawingCacheEnabled(true);
         imagen.buildDrawingCache();
@@ -136,7 +154,12 @@ public class RegistrarUsuario extends AppCompatActivity {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] data = baos.toByteArray();
 
-        final UploadTask uploadTask = mountainsRef.putBytes(data);
+
+        final StorageReference filePath = mStorageReference.child(productRandomKey + ".jpg");
+
+        final UploadTask uploadTask = filePath.putBytes(data);
+       //final UploadTask uploTastURLImagen = mountainsRef.putFile(ImageUri);
+
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
@@ -148,18 +171,10 @@ public class RegistrarUsuario extends AppCompatActivity {
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
                 // ...
 
-                Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                 mStorageReference.child(productRandomKey + ".jpg").getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                     @Override
-                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-
-                        if (!task.isSuccessful()){
-
-                            throw  task.getException();
-                        }
-                        downloadImageUrl = mountainsRef.getDownloadUrl().toString();
-                        return mountainsRef.getDownloadUrl();
-
-
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        downloadImageUrl = task.getResult().toString();
                     }
                 }).addOnCompleteListener(new OnCompleteListener<Uri>() {
                     @Override

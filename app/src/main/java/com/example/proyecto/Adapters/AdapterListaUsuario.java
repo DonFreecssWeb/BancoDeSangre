@@ -1,10 +1,12 @@
 package com.example.proyecto.Adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,17 +14,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proyecto.R;
 import com.example.proyecto.Usuario;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class AdapterListaUsuario extends RecyclerView.Adapter<AdapterListaUsuario.viewHolderDatos> implements Filterable   {
+public class AdapterListaUsuario extends RecyclerView.Adapter<AdapterListaUsuario.viewHolderDatos> /*implements Filterable   */{
     ArrayList<Usuario> usuarios = new ArrayList<>();
     ArrayList<Usuario> usuariosFull;
-    public AdapterListaUsuario(ArrayList<Usuario> usuarios) {
+    private Context mContext;
+    public AdapterListaUsuario(Context context,ArrayList<Usuario> usuarios) {
 
         this.usuarios = usuarios;
         this.usuariosFull = new ArrayList<>(usuarios);
+        mContext = context;
     }
     public AdapterListaUsuario(){}
 
@@ -37,6 +42,12 @@ public class AdapterListaUsuario extends RecyclerView.Adapter<AdapterListaUsuari
     @Override
     public void onBindViewHolder(@NonNull AdapterListaUsuario.viewHolderDatos holder, int position) {
     holder.setUsuarios(usuarios.get(position));
+    Usuario usuario = usuarios.get(position);
+    Picasso.with(mContext)
+            .load(usuario.getUrlimagen())
+            .fit()
+            .centerCrop()
+            .into(holder.imagen);
     }
 
     @Override
@@ -44,7 +55,7 @@ public class AdapterListaUsuario extends RecyclerView.Adapter<AdapterListaUsuari
         return usuarios.size();
     }
 
-    @Override
+/*    @Override
     public Filter getFilter() {
         return seachFilter;
     }
@@ -78,25 +89,30 @@ public class AdapterListaUsuario extends RecyclerView.Adapter<AdapterListaUsuari
             notifyDataSetChanged();
 
         }
-    };
+    };*/
 
 
     public static class viewHolderDatos extends RecyclerView.ViewHolder {
-        public TextView nombre,apellido,correo,telefono;
+        public TextView nombre,apellido,correo,telefono,urlimagen;
+        public ImageView imagen;
+
         public viewHolderDatos(@NonNull View itemView) {
             super(itemView);
 
              nombre = itemView.findViewById(R.id.plantilla_lista_usuario_nombre);
              apellido = itemView.findViewById(R.id.plantilla_lista_usuario_apellido);
              correo = itemView.findViewById(R.id.plantilla_lista_usuario_correo);
-             telefono = itemView.findViewById(R.id.plantilla_lista_usuario_telefono);
+
+             imagen = itemView.findViewById(R.id.plantilla_lista_imagen);
         }
         public  void setUsuarios(Usuario usuario) {
 
             nombre.setText(usuario.getNombre());
             apellido.setText(usuario.getApellido());
             correo.setText(usuario.getCorreo());
-            telefono.setText(usuario.getClave());
+
+
+            //imagen.setImageDrawable(usuario.getImagen(usuario.getUrlimagen()));
         }
     }
 

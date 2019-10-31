@@ -35,7 +35,10 @@ public class RecyclerListaUsuario extends AppCompatActivity {
     RecyclerView recyclerView;
     RecyclerView.Adapter madapter;
 
-
+    String nombre;
+    String apellido;
+    String correo;
+    String urlimagen;
 
 
 
@@ -56,12 +59,13 @@ public class RecyclerListaUsuario extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
 
-                                String cor = document.getString("correo");
-                                String nom = document.getString("nombre");
-                                String ape = document.getString("apellido");
-                                String tel = document.getString("telefono");
 
-                                usuarios.add(new Usuario(nom, ape, cor, tel));
+                                nombre = document.getString("nombre");
+                                apellido = document.getString("correo");
+                                correo = document.getString("apellido");
+                                urlimagen = document.getString("urlImage");
+
+                                usuarios.add(new Usuario(nombre, apellido, correo, urlimagen));
 
 
                                 //  Log.d(TAG, document.getId() + " => " + document.getData());
@@ -79,7 +83,7 @@ public class RecyclerListaUsuario extends AppCompatActivity {
 
     }
     public  void updateData(){
-        madapter = new AdapterListaUsuario(usuarios);
+        madapter = new AdapterListaUsuario(RecyclerListaUsuario.this,usuarios);
         recyclerView.setAdapter(madapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

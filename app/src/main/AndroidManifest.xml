@@ -15,10 +15,10 @@
         <activity android:name=".PostDetalle" />
         <activity android:name=".RecyclerListaUsuario"/>
         <activity android:name=".UsuarioActivity" />
-        <activity android:name=".Login"></activity>
+
         <activity android:name=".BuscarActivity" />
-<!--        <activity android:name=".RegistrarUsuario" />-->
-        <activity android:name=".RegistrarUsuario">
+        <activity android:name=".RegistrarUsuario" />
+        <activity android:name=".Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
