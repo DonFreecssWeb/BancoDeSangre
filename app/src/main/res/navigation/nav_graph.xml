@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/recyclerListaUsuario">
+
+    <fragment
+        android:id="@+id/recyclerListaUsuario"
+        android:name="com.example.proyecto.ui.fragment.RecyclerListaUsuario"
+        android:label="activity_recycler_lista_usuario"
+        tools:layout="@layout/activity_recycler_lista_usuario" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.proyecto.ui.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+</navigation>

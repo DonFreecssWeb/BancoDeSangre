@@ -1,23 +1,19 @@
-package com.example.proyecto;
+package com.example.proyecto.ui.fragment;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.SearchView;
-import android.widget.Toast;
+import android.view.ViewGroup;
 
 import com.example.proyecto.Adapters.AdapterListaUsuario;
 import com.example.proyecto.R;
-import com.example.proyecto.Usuario;
+import com.example.proyecto.model.Usuario;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -26,9 +22,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 
 import java.util.ArrayList;
-import java.util.Collection;
 
-public class RecyclerListaUsuario extends AppCompatActivity {
+public class RecyclerListaUsuario extends Fragment {
 
     ArrayList<Usuario> usuarios = new ArrayList<>();;
 
@@ -40,13 +35,13 @@ public class RecyclerListaUsuario extends AppCompatActivity {
     String correo;
     String urlimagen;
 
-
-
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recycler_lista_usuario);
-        recyclerView = findViewById(R.id.rv_listaUsuario);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_recycler_lista_usuario,container,false);
+
+
+        recyclerView = view.findViewById(R.id.rv_listaUsuario);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -80,12 +75,14 @@ public class RecyclerListaUsuario extends AppCompatActivity {
                 });
 
 
-
+        return view;
     }
+
     public  void updateData(){
-        madapter = new AdapterListaUsuario(RecyclerListaUsuario.this,usuarios);
+        madapter = new AdapterListaUsuario(getContext(),usuarios);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(madapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
 

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.proyecto">
-<uses-permission android:name="android.permission.INTERNET"></uses-permission>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,13 +11,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-<!--        <activity android:name=".RadioActivity"></activity>-->
+        <activity
+            android:name=".TopNavigation"
+            android:label="@string/title_activity_top_navigation"></activity>
+        <activity android:name=".ContenedorActivity" />
+        <!-- <activity android:name=".RadioActivity"></activity> -->
         <activity android:name=".NewPost" />
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".ui.MainActivity" />
         <activity android:name=".PostDetalle" />
-        <activity android:name=".RecyclerListaUsuario"/>
-        <activity android:name=".UsuarioActivity" />
-
+        <activity android:name=".ui.fragment.RecyclerListaUsuario" />
         <activity android:name=".BuscarActivity" />
         <activity android:name=".RegistrarUsuario" />
         <activity android:name=".Login">
