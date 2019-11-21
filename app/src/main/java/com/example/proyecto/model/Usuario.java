@@ -16,10 +16,6 @@ public class Usuario implements Serializable {
     private String clave;
     private String urlimagen;
 
-
-
-
-
     public Usuario(){
 
     }

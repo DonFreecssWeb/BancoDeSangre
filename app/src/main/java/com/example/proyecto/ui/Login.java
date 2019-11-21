@@ -1,4 +1,4 @@
-package com.example.proyecto;
+package com.example.proyecto.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,11 +10,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.proyecto.ContenedorActivity;
+import com.example.proyecto.R;
+import com.example.proyecto.RegistrarUsuario;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class Login extends AppCompatActivity {
 
@@ -31,12 +33,7 @@ public class Login extends AppCompatActivity {
 
         clave = findViewById(R.id.login_et_clave);
         correo = findViewById(R.id.crear_cuenta_correo);
-
-
-
     }
-
-
 
     public void login(View view) {
         String email = correo.getText().toString();
@@ -55,6 +52,7 @@ public class Login extends AppCompatActivity {
 
                         Intent intent = new Intent(Login.this, ContenedorActivity.class);
                         startActivity(intent);
+                        finish();
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w("TAG", "signInWithEmail:failure", task.getException());
@@ -64,7 +62,6 @@ public class Login extends AppCompatActivity {
                     }
                 }
             });
-
         }
 
 

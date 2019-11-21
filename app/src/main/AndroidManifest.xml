@@ -18,11 +18,9 @@
         <!-- <activity android:name=".RadioActivity"></activity> -->
         <activity android:name=".NewPost" />
         <activity android:name=".ui.MainActivity" />
-        <activity android:name=".PostDetalle" />
         <activity android:name=".ui.fragment.RecyclerListaUsuario" />
-        <activity android:name=".BuscarActivity" />
         <activity android:name=".RegistrarUsuario" />
-        <activity android:name=".Login">
+        <activity android:name=".ui.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -13,6 +13,6 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.proyecto.ui.home.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        android:label="fragment_home_list"
+        tools:layout="@layout/fragment_home_list" />
 </navigation>
