@@ -31,14 +31,13 @@ public class NewPost extends AppCompatActivity {
     }
 
 
-
     public void saveNote(View view) {
         String comment = comentario.getText().toString();
         if (comment.trim().isEmpty()) {
 
             Toast.makeText(this, "Inserte un comentario", Toast.LENGTH_SHORT).show();
         }else {
-            String usuarioActual = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            String usuarioActual = FirebaseAuth.getInstance().getCurrentUser().getEmail();
             mFirestore.collection("users").document(usuarioActual).collection("posts").add(new Comentario(comment)).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                 @Override
                 public void onSuccess(DocumentReference documentReference) {

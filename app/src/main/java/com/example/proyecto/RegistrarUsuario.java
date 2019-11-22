@@ -211,20 +211,13 @@ public class RegistrarUsuario extends AppCompatActivity {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        db.collection("users")
-                .add(user)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d("TAG", "DocumentSnapshot added with ID: " + documentReference.getId());
-
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(Exception e) {
-                        Log.w("TAG", "Error adding document", e);
-                    }
-                });
+        db.collection("users").document(correo.getText().toString())
+                .set(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Toast.makeText(RegistrarUsuario.this, "Grabado los datos", Toast.LENGTH_SHORT).show();
+            }
+        });
+                
     }
 }

@@ -13,13 +13,25 @@
 
         <TextView
             android:id="@+id/comentarioTexto"
-            android:layout_width="269dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="52dp"
+            android:layout_width="136dp"
+            android:layout_height="97dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="48dp"
             android:text="TextView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="131dp"
+            android:layout_height="99dp"
+            android:layout_marginStart="22dp"
+            android:layout_marginTop="40dp"
+            app:layout_constraintEnd_toStartOf="@+id/comentarioTexto"
+            app:layout_constraintHorizontal_bias="0.405"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/fui_ic_check_circle_black_128dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

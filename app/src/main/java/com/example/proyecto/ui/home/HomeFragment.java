@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,7 +24,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -32,7 +36,7 @@ import java.util.List;
 
 
 public class HomeFragment extends Fragment {
-    RecyclerView recyclerView;
+    private RecyclerView recyclerView;
     Comentario comentario;
 
     FirebaseFirestore mfirebaseFirestore;
@@ -53,44 +57,35 @@ public class HomeFragment extends Fragment {
         lista = new ArrayList<>();
         mfirebaseFirestore = FirebaseFirestore.getInstance();
 
-       // Toast.makeText(getContext(), "Solo entra hasta aca", Toast.LENGTH_SHORT).show();
+
+        String usuarioActual = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+
+        DocumentReference comentarioReference = mfirebaseFirestore.collection("users").document();
 
 
-        mfirebaseFirestore.collection("userss").document().collection("posts").get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                String comment;
-
-                                comment = document.getString("comentario");
+        mfirebaseFirestore.collectionGroup("posts").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                Toast.makeText(getContext(), "Entra", Toast.LENGTH_SHORT).show();
 
 
-                                lista.add(new Comentario(comment));
-                                Toast.makeText(getContext(), "" + comment, Toast.LENGTH_SHORT).show();
+                if (task.isSuccessful()){
 
-                            }
-
-                            updateData();
-                        } else {
-                            Toast.makeText(getContext(), "no se pudo", Toast.LENGTH_SHORT).show();
-                            //Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
+                    String comentario;
+                    for (QueryDocumentSnapshot documentSnapshot : task.getResult()){
+                        comentario = documentSnapshot.getString("comentario");
+                        lista.add(new Comentario(comentario));
                     }
-                }).addOnFailureListener(new OnFailureListener() {
+                }
+                updateData();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getContext(), "Algo a fallado"+e.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.e("TAG",e.getMessage());
-            }
-        }).addOnCanceledListener(new OnCanceledListener() {
-            @Override
-            public void onCanceled() {
-                Toast.makeText(getContext(), "Se canceló", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "falla", Toast.LENGTH_SHORT).show();
             }
         });
+
 
         return view;
     }
