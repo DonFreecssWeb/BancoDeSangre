@@ -11,11 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.ChatBoard"></activity>
         <activity
             android:name=".TopNavigation"
-            android:label="@string/title_activity_top_navigation"></activity>
-        <activity android:name=".ContenedorActivity" />
-        <!-- <activity android:name=".RadioActivity"></activity> -->
+            android:label="@string/title_activity_top_navigation" />
+        <activity android:name=".ContenedorActivity" /> <!-- <activity android:name=".RadioActivity"></activity> -->
         <activity android:name=".NewPost" />
         <activity android:name=".ui.MainActivity" />
         <activity android:name=".ui.fragment.RecyclerListaUsuario" />

@@ -75,6 +75,7 @@ public class HomeFragment extends Fragment {
                     for (QueryDocumentSnapshot documentSnapshot : task.getResult()){
                         comentario = documentSnapshot.getString("comentario");
                         lista.add(new Comentario(comentario));
+
                     }
                 }
                 updateData();

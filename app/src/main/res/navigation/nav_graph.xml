@@ -15,4 +15,9 @@
         android:name="com.example.proyecto.ui.home.HomeFragment"
         android:label="fragment_home_list"
         tools:layout="@layout/fragment_home_list" />
+    <activity
+        android:id="@+id/chatBoard"
+        android:name="com.example.proyecto.ui.ChatBoard"
+        android:label="activity_chat_board"
+        tools:layout="@layout/activity_chat_board" />
 </navigation>

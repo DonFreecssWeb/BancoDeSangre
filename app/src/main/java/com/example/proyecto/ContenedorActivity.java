@@ -37,6 +37,9 @@ public class ContenedorActivity extends AppCompatActivity implements BottomNavig
 
                 navController.navigate(R.id.recyclerListaUsuario);
                 break;
+            case R.id.navigation_dashboard:
+                navController.navigate(R.id.chatBoard);
+
         }
 
         return false;
