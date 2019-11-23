@@ -28,6 +28,7 @@ public class AdapterMensajes  extends RecyclerView.Adapter<HolderMensaje> {
     public void addMensaje (Mensaje m){
         listMensaje.add(m);
         notifyItemInserted(listMensaje.size()); //Si no se pone esto no aparece nada
+        notifyDataSetChanged();
 
     }
 
@@ -57,7 +58,6 @@ public class AdapterMensajes  extends RecyclerView.Adapter<HolderMensaje> {
                 holder.getFotoMensaje().setVisibility(View.GONE);
                 holder.getMensaje().setVisibility(View.VISIBLE);
             }
-
     }
 
     @Override
